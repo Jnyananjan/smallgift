@@ -2,29 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR Scanner</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            touch-action: manipulation; /* Prevent pinch zoom */
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
+    <script>
+        const githubRepo = "https://raw.githubusercontent.com/Jnyananjan/smallgift/main/";
+
+        async function fetchMarkersAndVideos() {
+            let response = await fetch(githubRepo);
+            let data = await response.text();
+
+            let parser = new DOMParser();
+            let doc = parser.parseFromString(data, "text/html");
+            let files = [...doc.querySelectorAll("a")].map(a => a.textContent);
+
+            let markers = files.filter(file => file.endsWith(".jpg") || file.endsWith(".png"));
+            let videos = files.filter(file => file.endsWith(".mp4"));
+
+            let markerMap = {};
+            markers.forEach(marker => {
+                let baseName = marker.split(".")[0];
+                let matchingVideo = videos.find(video => video.startsWith(baseName));
+                if (matchingVideo) {
+                    markerMap[marker] = matchingVideo;
+                }
+            });
+
+            return markerMap;
         }
-    </style>
+
+        async function setupAR() {
+            let scene = document.querySelector("a-scene");
+            let markerMap = await fetchMarkersAndVideos();
+
+            Object.keys(markerMap).forEach(marker => {
+                let markerEntity = document.createElement("a-marker");
+                markerEntity.setAttribute("type", "pattern");
+                markerEntity.setAttribute("url", githubRepo + marker);
+                
+                let videoEntity = document.createElement("a-video");
+                videoEntity.setAttribute("src", githubRepo + markerMap[marker]);
+                videoEntity.setAttribute("width", "2");
+                videoEntity.setAttribute("height", "1");
+                videoEntity.setAttribute("position", "0 0.5 0");
+
+                markerEntity.appendChild(videoEntity);
+                scene.appendChild(markerEntity);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", setupAR);
+    </script>
 </head>
-<body>
+<body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
-        <a-marker preset="custom" type="pattern" url="marker.patt">
-            <a-entity 
-                geometry="primitive: box; depth: 0.1; height: 0.5; width: 0.5"
-                material="color: red"
-                scale="0.3 0.3 0.3"
-                position="0 0 0">
-            </a-entity>
-        </a-marker>
-        <a-entity camera="fov: 80" position="0 0 5"></a-entity>
+        <a-marker-camera></a-marker-camera>
     </a-scene>
 </body>
 </html>
