@@ -3,14 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Web Version</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>AR Web Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>A small gift from Jana😁</h1>
-        <button id="scan-btn">Scan</button>
-    </div>
-    <script src="script.js"></script>
+    <h1>A small gift from Jana😁</h1>
+    <button onclick="location.href='scan.html'">Scan</button>
 </body>
 </html>
