@@ -1,13 +1,28 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f4f4f4;
+    background: url('bg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
+
 h1 {
-    color: #333;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
 button {
     padding: 10px 20px;
     font-size: 18px;
     cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
 }
