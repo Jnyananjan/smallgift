@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan</title>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar-js"></script>
+    <title>Scan AR Marker</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js@1.7.2/aframe/build/aframe-ar.min.js"></script>
 </head>
-<body>
-    <h1>Scanning...</h1>
-    <script>
-        // AR scanning logic will go here
-    </script>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene embedded arjs>
+        <a-marker-camera preset="custom"></a-marker-camera>
+    </a-scene>
 </body>
 </html>
